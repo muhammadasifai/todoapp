@@ -1,10 +1,4 @@
-// yarn add react-native-paper
-// yarn add react-native-safe-area-context
-// yarn cache clean
-// yarn add react-native-vector-icons
-
 import {
-  Alert,
   FlatList,
   StyleSheet,
   Text,
@@ -13,74 +7,34 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import {Fallback} from '../components';
+import {SVG} from '../assets/svg';
 
-// const dummyData = [
-//   {
-//     id: '01',
-//     title: 'Wash Car',
-//   },
-//   {
-//     id: '02',
-//     title: 'Read a book',
-//   },
-// ];
-
-//console.log(Date.now().toString());
-
-const TodoScreen = () => {
-  // init local states
+const TodoScreenTest1 = () => {
   const [todo, setTodo] = useState('');
   const [todoList, setTodoList] = useState([]);
   const [editedTodo, setEditedTodo] = useState(null);
 
-  // Handle Add Todo
-
   const handleAddTodo = () => {
-    // console.log('jjj');
-    // structure of a single todo item
-    // {
-    //   id:
-    //   tiltle:
-    // }
-
-    if (todo === '') {
-      return; // early return
-    }
-    // ... : is called spread operator. Which give us previous data in the form of object
-    // console.log('list', [...todoList]);
     setTodoList([...todoList, {id: Date.now().toString(), title: todo}]);
-
-    console.log('afterlistaaa', ...todoList);
-    console.log('afterlist', todoList);
     setTodo('');
   };
 
-  // Handle Delete
   const handleDeleteTodo = id => {
     const updatedTodoList = todoList.filter(todo => todo.id !== id);
-
     setTodoList(updatedTodoList);
   };
 
-  // Handle Edit todo
-
   const handleEditTodo = todo => {
-    console.log('kkk', todo);
     setEditedTodo(todo);
     setTodo(todo.title);
   };
-
-  // Handle Update todo
 
   const handleUpdateTodo = () => {
     const updatedTodos = todoList.map(item => {
       if (item.id === editedTodo.id) {
         return {...item, title: todo};
       }
-
       return item;
     });
     setTodoList(updatedTodos);
@@ -97,24 +51,24 @@ const TodoScreen = () => {
         <TouchableOpacity
           onPress={() => handleEditTodo(item)}
           style={styles.editdelte}>
-          <FontAwesome
+          {/* <FontAwesome
             name="pencil"
             color={'#fff'}
             size={22}
             style={styles.editdelte}
-          />
-          {/* <SVG.Pencil /> */}
+          /> */}
+          <SVG.Pencil />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleDeleteTodo(item.id)}
           style={styles.editdelte}>
-          <FontAwesome6
+          {/* <FontAwesome6
             name="trash-can"
             color={'#fff'}
             size={22}
             style={styles.editdelte}
-          />
-          {/* <SVG.TrashCan /> */}
+          /> */}
+          <SVG.TrashCan />
         </TouchableOpacity>
       </View>
     );
@@ -126,29 +80,23 @@ const TodoScreen = () => {
         style={styles.input}
         placeholder="Add a task"
         value={todo}
-        //onChangeText={(userText) => Console.log(userText)}
         onChangeText={userText => setTodo(userText)}
       />
 
       {editedTodo ? (
         <TouchableOpacity
           style={styles.button}
-          //onPress={() => Alert('hi')}
           onPress={() => handleUpdateTodo()}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity
-          style={styles.button}
-          //onPress={() => Alert('hi')}
-          onPress={() => handleAddTodo()}>
+        <TouchableOpacity style={styles.button} onPress={() => handleAddTodo()}>
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       )}
 
       {/* Render todo list */}
 
-      {/* <FlatList data={dummyData} renderItem={renderTodos} /> */}
       <FlatList data={todoList} renderItem={renderTodos} />
 
       {todoList.length <= 0 && <Fallback />}
@@ -156,7 +104,7 @@ const TodoScreen = () => {
   );
 };
 
-export default TodoScreen;
+export default TodoScreenTest1;
 
 const styles = StyleSheet.create({
   container: {
